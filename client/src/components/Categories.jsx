@@ -11,17 +11,10 @@ export default function Categories({ onSelectCategory }) {
 
   return (
     <section id="categories" className="mx-auto max-w-[900px] xl:max-w-[1280px] px-4 lg:px-6 pt-6">
-      <div className="flex items-center justify-between">
+      <div>
         <h2 className="section-title">
           Shop by Category <i className="under" />
         </h2>
-        <button
-          onClick={() => handleCategoryClick('All')}
-          className="flex items-center gap-1.5 text-xs font-bold text-ink hover:text-gold transition-colors group cursor-pointer"
-        >
-          <span>View All Categories</span>
-          <ArrowRight size={13} className="transition-transform group-hover:translate-x-1" />
-        </button>
       </div>
 
       <div className="mt-4 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
