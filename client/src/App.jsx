@@ -149,7 +149,7 @@ export default function App() {
   };
 
   return (
-    <div className="flex min-h-screen flex-col bg-white text-ink font-sans">
+    <div className="flex min-h-screen flex-col bg-white text-ink font-sans w-full max-w-full overflow-x-hidden">
       {/* Toast Notification */}
       {toastMessage && (
         <div className="fixed top-20 right-4 z-50 flex items-center gap-2 rounded-2xl bg-ink px-4 py-3 text-xs font-bold text-white shadow-xl border border-gold/30 animate-in fade-in slide-in-from-top-2">
