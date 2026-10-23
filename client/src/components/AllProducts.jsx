@@ -76,7 +76,7 @@ export default function AllProducts({
               Home
             </span>
             <span>/</span>
-            <span className="text-neutral-700 font-semibold">All Products</span>
+            <span className="text-neutral-700 font-semibold">Products</span>
             {selectedCategory !== 'All' && (
               <>
                 <span>/</span>
@@ -89,67 +89,47 @@ export default function AllProducts({
 
       {/* Main Content Area */}
       <div className="mx-auto max-w-[1280px] px-4 pt-8 lg:px-8">
-        {/* Page Title */}
-        <div className="mb-6">
-          <h1 className="font-serif text-2xl sm:text-3xl font-bold text-ink">
-            {selectedCategory === 'All' ? 'All Products' : selectedCategory}
-          </h1>
-        </div>
-
-        {/* Filter Tabs and Search Bar */}
-        <div className="flex flex-col gap-4 mb-8">
-          {/* Category Filter Pills */}
-          <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-thin">
-            <span className="text-xs font-bold text-neutral-600 uppercase tracking-wider shrink-0 flex items-center gap-1 mr-1">
-              <Filter size={13} /> Category:
-            </span>
-            {allCategoryTabs.map((tab) => {
-              const active = selectedCategory.toLowerCase() === tab.name.toLowerCase();
-              return (
-                <button
-                  key={tab.name}
-                  onClick={() => setSelectedCategory(tab.name)}
-                  className={`flex shrink-0 items-center gap-2 rounded-full px-4 py-2 text-xs font-bold transition-all shadow-sm ${
-                    active
-                      ? 'bg-ink text-white shadow-md scale-105'
-                      : 'bg-white text-neutral-700 hover:bg-neutral-100 border border-neutral-200'
-                  }`}
-                >
-                  <span>{tab.name}</span>
-                  <span
-                    className={`rounded-full px-1.5 py-0.2 text-[10px] ${
-                      active ? 'bg-gold text-ink font-bold' : 'bg-neutral-100 text-neutral-500'
-                    }`}
-                  >
-                    {tab.count}
-                  </span>
-                </button>
-              );
-            })}
+        {/* Search Bar & Dropdowns (Category + Sort by) */}
+        <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3 bg-white p-3 rounded-2xl border border-neutral-200/80 shadow-sm mb-6">
+          <div className="relative flex-1">
+            <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-neutral-400" />
+            <input
+              type="text"
+              placeholder="Search by product name, ingredient, or benefit..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="w-full rounded-xl bg-neutral-50 pl-10 pr-9 py-2.5 text-xs text-ink placeholder:text-neutral-400 outline-none border border-neutral-200 focus:border-gold transition-colors"
+            />
+            {search && (
+              <button
+                onClick={() => setSearch('')}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-neutral-700"
+              >
+                <X size={14} />
+              </button>
+            )}
           </div>
 
-          {/* Search Bar & Sort Dropdown */}
-          <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 bg-white p-3 rounded-2xl border border-neutral-200/80 shadow-sm">
-            <div className="relative flex-1">
-              <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-neutral-400" />
-              <input
-                type="text"
-                placeholder="Search by product name, ingredient, or benefit..."
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                className="w-full rounded-xl bg-neutral-50 pl-10 pr-9 py-2.5 text-xs text-ink placeholder:text-neutral-400 outline-none border border-neutral-200 focus:border-gold transition-colors"
-              />
-              {search && (
-                <button
-                  onClick={() => setSearch('')}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-neutral-700"
-                >
-                  <X size={14} />
-                </button>
-              )}
+          <div className="flex flex-wrap items-center gap-3 shrink-0">
+            {/* Category Dropdown (before Sort by / Featured) */}
+            <div className="flex items-center gap-2">
+              <Filter size={14} className="text-neutral-500" />
+              <span className="text-xs font-semibold text-neutral-600">Category:</span>
+              <select
+                value={selectedCategory}
+                onChange={(e) => setSelectedCategory(e.target.value)}
+                className="rounded-xl border border-neutral-200 bg-neutral-50 px-3 py-2 text-xs font-semibold text-ink outline-none focus:border-gold cursor-pointer"
+              >
+                {allCategoryTabs.map((tab) => (
+                  <option key={tab.name} value={tab.name}>
+                    {tab.name} ({tab.count})
+                  </option>
+                ))}
+              </select>
             </div>
 
-            <div className="flex items-center gap-2 shrink-0">
+            {/* Sort by Dropdown */}
+            <div className="flex items-center gap-2">
               <SlidersHorizontal size={14} className="text-neutral-500" />
               <span className="text-xs font-semibold text-neutral-600">Sort by:</span>
               <select
