@@ -62,16 +62,16 @@ export default function AllProducts({
   return (
     <div className="min-h-screen bg-[#faf8f5] pb-20">
       {/* Top Breadcrumb Header */}
-      <div className="border-b border-neutral-200 bg-white shadow-sm">
-        <div className="mx-auto flex max-w-[1280px] items-center justify-between px-4 py-3 lg:px-8">
+      <div className="border-b border-neutral-200 bg-white shadow-xs">
+        <div className="mx-auto flex max-w-[1280px] items-center justify-between px-4 py-2 lg:px-8">
           <button
             onClick={onBackHome}
-            className="group flex items-center gap-2 text-xs font-semibold text-neutral-700 hover:text-gold transition-colors"
+            className="group flex items-center gap-1.5 text-xs font-semibold text-neutral-700 hover:text-gold transition-colors"
           >
-            <ArrowLeft size={16} className="transition-transform group-hover:-translate-x-1" />
+            <ArrowLeft size={15} className="transition-transform group-hover:-translate-x-1" />
             Back to Home
           </button>
-          <div className="flex items-center gap-2 text-[11px] text-neutral-500">
+          <div className="flex items-center gap-1.5 text-[11px] text-neutral-500">
             <span className="hover:text-ink cursor-pointer" onClick={onBackHome}>
               Home
             </span>
@@ -88,9 +88,9 @@ export default function AllProducts({
       </div>
 
       {/* Main Content Area */}
-      <div className="mx-auto max-w-[1280px] px-4 pt-8 lg:px-8">
+      <div className="mx-auto max-w-[1280px] px-4 pt-3 sm:pt-4 lg:px-8">
         {/* Search Bar & Dropdowns (Category + Sort by) */}
-        <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3 bg-white p-3 rounded-2xl border border-neutral-200/80 shadow-sm mb-6">
+        <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-2.5 bg-white p-2.5 sm:p-3 rounded-2xl border border-neutral-200/80 shadow-xs mb-3 sm:mb-4">
           <div className="relative flex-1">
             <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-neutral-400" />
             <input
@@ -98,7 +98,7 @@ export default function AllProducts({
               placeholder="Search by product name, ingredient, or benefit..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full rounded-none bg-neutral-50 pl-10 pr-9 py-2.5 text-xs text-ink placeholder:text-neutral-400 outline-none border border-neutral-200 focus:border-gold transition-colors"
+              className="w-full rounded-none bg-neutral-50 pl-10 pr-9 py-2 text-xs text-ink placeholder:text-neutral-400 outline-none border border-neutral-200 focus:border-gold transition-colors"
             />
             {search && (
               <button
@@ -118,7 +118,7 @@ export default function AllProducts({
               <select
                 value={selectedCategory}
                 onChange={(e) => setSelectedCategory(e.target.value)}
-                className="w-full min-w-0 rounded-none border border-neutral-200 bg-neutral-50 px-1.5 sm:px-3 py-2 text-[11px] sm:text-xs font-semibold text-ink outline-none focus:border-gold cursor-pointer truncate"
+                className="w-full min-w-0 rounded-none border border-neutral-200 bg-neutral-50 px-1.5 sm:px-3 py-1.5 text-[11px] sm:text-xs font-semibold text-ink outline-none focus:border-gold cursor-pointer truncate"
               >
                 {allCategoryTabs.map((tab) => (
                   <option key={tab.name} value={tab.name}>
@@ -135,7 +135,7 @@ export default function AllProducts({
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
-                className="w-full min-w-0 rounded-none border border-neutral-200 bg-neutral-50 px-1.5 sm:px-3 py-2 text-[11px] sm:text-xs font-semibold text-ink outline-none focus:border-gold cursor-pointer truncate"
+                className="w-full min-w-0 rounded-none border border-neutral-200 bg-neutral-50 px-1.5 sm:px-3 py-1.5 text-[11px] sm:text-xs font-semibold text-ink outline-none focus:border-gold cursor-pointer truncate"
               >
                 <option value="featured">Featured First</option>
                 <option value="price-low">Price: Low to High</option>
@@ -147,7 +147,7 @@ export default function AllProducts({
         </div>
 
         {/* Results Count & Active Filters Indicator */}
-        <div className="flex items-center justify-between mb-4 px-1 text-xs text-neutral-600 font-medium">
+        <div className="flex items-center justify-between mb-2.5 sm:mb-3 px-1 text-xs text-neutral-600 font-medium">
           <p>
             Showing <strong className="text-ink">{filteredProducts.length}</strong> of{' '}
             <strong className="text-ink">{products.length}</strong> products
