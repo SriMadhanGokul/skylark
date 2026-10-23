@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { ArrowLeft, ShoppingCart, Star, ShieldCheck, Check, Sparkles, Heart } from 'lucide-react';
+import { ArrowLeft, ShoppingCart, Star, ShieldCheck, Check, Heart, ChevronLeft, ChevronRight } from 'lucide-react';
 import Img from './Img.jsx';
 import Stars from './Stars.jsx';
 import TrustIcon from './TrustIcon.jsx';
@@ -26,6 +26,21 @@ export default function ProductDetail({
   }, [product]);
 
   if (!product) return null;
+
+  const currentImages = product.images && product.images.length > 0 ? product.images : [product.img];
+  const currentIndex = currentImages.indexOf(activeImage) !== -1 ? currentImages.indexOf(activeImage) : 0;
+
+  const handlePrevImage = (e) => {
+    e.stopPropagation();
+    const prevIdx = (currentIndex - 1 + currentImages.length) % currentImages.length;
+    setActiveImage(currentImages[prevIdx]);
+  };
+
+  const handleNextImage = (e) => {
+    e.stopPropagation();
+    const nextIdx = (currentIndex + 1) % currentImages.length;
+    setActiveImage(currentImages[nextIdx]);
+  };
 
   const handleAdd = () => {
     if (onAddToCart) {
@@ -67,7 +82,7 @@ export default function ProductDetail({
         <div className="grid gap-10 lg:grid-cols-12 bg-white rounded-3xl p-6 lg:p-10 shadow-[0_4px_25px_rgba(0,0,0,0.04)] border border-neutral-100">
           {/* Left Column: Image Gallery */}
           <div className="lg:col-span-6 flex flex-col gap-4">
-            <div className="relative aspect-square w-full overflow-hidden rounded-2xl bg-neutral-50 border border-neutral-200/80 p-4 grid place-items-center">
+            <div className="group relative aspect-square w-full overflow-hidden rounded-2xl bg-neutral-50 border border-neutral-200/80 p-4 grid place-items-center">
               <Img
                 src={activeImage}
                 alt={product.name}
@@ -75,13 +90,38 @@ export default function ProductDetail({
                 placeholder="bg-neutral-100"
               />
               {discount > 0 && (
-                <span className="absolute top-4 left-4 rounded-full bg-gold px-3 py-1 text-[11px] font-bold text-white shadow-sm">
+                <span className="absolute top-4 left-4 rounded-full bg-gold px-3 py-1 text-[11px] font-bold text-white shadow-sm z-10">
                   {discount}% OFF
                 </span>
               )}
-              <span className="absolute top-4 right-4 rounded-full bg-emerald-50 border border-emerald-200 px-3 py-1 text-[10px] font-semibold text-emerald-700">
+              <span className="absolute top-4 right-4 rounded-full bg-emerald-50 border border-emerald-200 px-3 py-1 text-[10px] font-semibold text-emerald-700 z-10">
                 100% Pet Safe
               </span>
+
+              {/* Navigation Arrows */}
+              {currentImages.length > 1 && (
+                <>
+                  <button
+                    type="button"
+                    onClick={handlePrevImage}
+                    aria-label="Previous image"
+                    className="absolute left-3 top-1/2 -translate-y-1/2 z-20 grid h-10 w-10 place-items-center rounded-full bg-white/90 text-ink shadow-md hover:bg-white hover:scale-110 active:scale-95 transition-all cursor-pointer border border-neutral-200/80"
+                  >
+                    <ChevronLeft size={20} />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleNextImage}
+                    aria-label="Next image"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 z-20 grid h-10 w-10 place-items-center rounded-full bg-white/90 text-ink shadow-md hover:bg-white hover:scale-110 active:scale-95 transition-all cursor-pointer border border-neutral-200/80"
+                  >
+                    <ChevronRight size={20} />
+                  </button>
+                  <span className="absolute bottom-3 left-1/2 -translate-x-1/2 rounded-full bg-black/60 px-3 py-0.5 text-[10px] font-bold text-white backdrop-blur-xs z-10">
+                    {currentIndex + 1} / {currentImages.length}
+                  </span>
+                </>
+              )}
             </div>
 
             {/* Gallery Thumbnails */}
@@ -293,57 +333,6 @@ export default function ProductDetail({
             </div>
           </div>
         </div>
-
-        {/* Full Image Gallery for this Product */}
-        {product.images && product.images.length > 0 && (
-          <div className="mt-12 rounded-3xl bg-white p-6 lg:p-10 shadow-[0_4px_25px_rgba(0,0,0,0.04)] border border-neutral-100">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-neutral-100 pb-4 mb-6">
-              <div>
-                <h2 className="font-serif text-xl lg:text-2xl font-bold text-ink">
-                  Product Gallery & Visual Guides
-                </h2>
-                <p className="text-xs text-neutral-500 mt-1">
-                  Explore all high-resolution infographics, ingredient breakdowns, and usage directions for {product.name}
-                </p>
-              </div>
-              <span className="rounded-full bg-gold/15 px-3 py-1 text-xs font-bold text-gold">
-                {product.images.length} Images Available
-              </span>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {product.images.map((imgUrl, idx) => (
-                <div
-                  key={idx}
-                  onClick={() => {
-                    setActiveImage(imgUrl);
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                  }}
-                  className={`group relative overflow-hidden rounded-2xl border-2 p-3 bg-neutral-50 cursor-pointer transition-all hover:shadow-lg hover:-translate-y-1 ${
-                    activeImage === imgUrl ? 'border-gold shadow-md' : 'border-neutral-200 hover:border-neutral-400'
-                  }`}
-                >
-                  <div className="aspect-square w-full overflow-hidden rounded-xl bg-white grid place-items-center">
-                    <Img
-                      src={imgUrl}
-                      alt={`${product.name} image ${idx + 1}`}
-                      className="h-full w-full object-contain group-hover:scale-105 transition-transform duration-300"
-                      placeholder="bg-neutral-100"
-                    />
-                  </div>
-                  <div className="mt-2.5 flex items-center justify-between px-1">
-                    <span className="text-[11px] font-bold text-neutral-700">
-                      Photo {idx + 1}
-                    </span>
-                    <span className="text-[10px] font-semibold text-gold group-hover:underline">
-                      Click to Enlarge ↑
-                    </span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
 
         {/* Related Products Section */}
         {related.length > 0 && (
