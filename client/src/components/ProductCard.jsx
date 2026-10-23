@@ -67,12 +67,6 @@ export default function ProductCard({
         >
           <Heart size={14} className={isWishlisted ? 'fill-rose-500 text-rose-500' : ''} />
         </button>
-
-        {p.images && p.images.length > 1 && (
-          <span className="absolute bottom-1.5 right-1.5 rounded-none bg-ink/75 px-1.5 py-0.5 text-[8px] font-bold text-white backdrop-blur-xs">
-            {p.images.length} photos
-          </span>
-        )}
       </div>
 
       {/* Product Info */}
