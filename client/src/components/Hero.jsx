@@ -8,7 +8,7 @@ export default function Hero({ onShopProducts }) {
     <section id="home" className="relative overflow-hidden bg-gradient-to-b lg:bg-gradient-to-r from-white via-[#fbf5ee] to-[#f4e4d4]">
       <div className="relative mx-auto flex flex-col lg:grid lg:grid-cols-12 max-w-[900px] xl:max-w-[1280px] lg:min-h-[420px]">
         {/* Content Column */}
-        <div className="relative z-10 flex flex-col justify-center px-4 pt-8 pb-6 sm:px-6 lg:py-10 lg:col-span-6 xl:col-span-5">
+        <div className="relative z-10 flex flex-col justify-center px-4 pt-8 pb-8 sm:px-6 lg:py-10 lg:col-span-6 xl:col-span-5">
           <span className="text-[11px] font-bold tracking-wider text-gold uppercase">
             PREMIUM PET CARE
           </span>
@@ -44,8 +44,8 @@ export default function Hero({ onShopProducts }) {
           </ul>
         </div>
 
-        {/* Hero Image Column */}
-        <div className="relative w-full lg:col-span-6 xl:col-span-7 flex items-center justify-center p-4 sm:p-6 lg:p-0">
+        {/* Hero Image Column - Hidden on mobile view */}
+        <div className="hidden lg:flex relative w-full lg:col-span-6 xl:col-span-7 items-center justify-center p-4 sm:p-6 lg:p-0">
           <div className="w-full overflow-hidden rounded-2xl lg:rounded-none lg:h-full flex items-center justify-center">
             <Img
               src={IMG.hero}

@@ -51,8 +51,8 @@ export default function BestSellers({
         </div>
       )}
 
-      {/* Trust Badges */}
-      <div className="mt-8 rounded-2xl bg-neutral-100/80 p-4 sm:p-6 border border-neutral-200/60 shadow-xs">
+      {/* Trust Badges - Hidden on mobile view */}
+      <div className="hidden md:block mt-8 rounded-2xl bg-neutral-100/80 p-4 sm:p-6 border border-neutral-200/60 shadow-xs">
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 sm:gap-2 divide-y sm:divide-y-0 sm:divide-x divide-neutral-200/80">
           {trust.map((t) => (
             <div

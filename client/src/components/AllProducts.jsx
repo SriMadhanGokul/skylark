@@ -210,8 +210,8 @@ export default function AllProducts({
           </div>
         )}
 
-        {/* Trust Badges Bar */}
-        <div className="mt-12 rounded-2xl bg-white p-4 sm:p-6 shadow-sm border border-neutral-100">
+        {/* Trust Badges Bar - Hidden on mobile view */}
+        <div className="hidden md:block mt-12 rounded-2xl bg-white p-4 sm:p-6 shadow-sm border border-neutral-100">
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 sm:gap-2 divide-y sm:divide-y-0 sm:divide-x divide-neutral-100">
             {trust.map((t) => (
               <div
