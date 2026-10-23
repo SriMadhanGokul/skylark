@@ -257,23 +257,23 @@ export default function AllProducts({
         )}
 
         {/* Trust Badges Bar */}
-        <div className="mt-12 grid gap-4 rounded-2xl bg-white p-6 shadow-sm border border-neutral-100 md:grid-cols-3">
-          {trust.map((t, i) => (
-            <div
-              key={t.title}
-              className={`flex items-center justify-center gap-4 ${
-                i < 2 ? 'md:border-r md:border-neutral-200' : ''
-              }`}
-            >
-              <span className="grid h-12 w-12 place-items-center rounded-full bg-ink text-white">
-                <TrustIcon name={t.icon} size={22} />
-              </span>
-              <div>
-                <p className="text-xs font-bold text-ink">{t.title}</p>
-                <p className="text-[11px] text-neutral-500">{t.text}</p>
+        <div className="mt-12 rounded-2xl bg-white p-4 sm:p-6 shadow-sm border border-neutral-100">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 sm:gap-2 divide-y sm:divide-y-0 sm:divide-x divide-neutral-100">
+            {trust.map((t) => (
+              <div
+                key={t.title}
+                className="flex items-center gap-3.5 pt-3.5 sm:pt-0 first:pt-0 sm:px-4 justify-start sm:justify-center"
+              >
+                <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-ink text-white shadow-xs">
+                  <TrustIcon name={t.icon} size={20} />
+                </span>
+                <div className="text-left">
+                  <p className="text-xs sm:text-[13px] font-bold text-ink">{t.title}</p>
+                  <p className="text-[11px] text-neutral-500 mt-0.5">{t.text}</p>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </div>
