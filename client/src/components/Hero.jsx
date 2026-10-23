@@ -3,7 +3,7 @@ import Img from './Img.jsx';
 import TrustIcon from './TrustIcon.jsx';
 import { IMG } from '../data/content.js';
 
-export default function Hero({ onShopProducts, onExploreCategories }) {
+export default function Hero({ onShopProducts }) {
   return (
     <section id="home" className="relative overflow-hidden bg-gradient-to-b lg:bg-gradient-to-r from-white via-[#fbf5ee] to-[#f4e4d4]">
       <div className="relative mx-auto flex flex-col lg:grid lg:grid-cols-12 max-w-[900px] xl:max-w-[1280px] lg:min-h-[420px]">
@@ -27,12 +27,6 @@ export default function Hero({ onShopProducts, onExploreCategories }) {
               className="flex h-10 px-5 items-center justify-center gap-2 rounded-xl bg-ink text-xs font-semibold text-white shadow-sm hover:bg-neutral-800 transition-colors cursor-pointer"
             >
               Shop Products <ArrowRight size={13} />
-            </button>
-            <button
-              onClick={onExploreCategories}
-              className="flex h-10 px-5 items-center justify-center rounded-xl border border-ink/80 bg-white/80 text-xs font-semibold text-ink hover:bg-white transition-colors cursor-pointer"
-            >
-              Explore Categories
             </button>
           </div>
 

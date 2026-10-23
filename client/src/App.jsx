@@ -217,13 +217,7 @@ export default function App() {
 
         {currentView === 'home' && (
           <>
-            <Hero
-              onShopProducts={handleViewAllProducts}
-              onExploreCategories={() => {
-                const el = document.getElementById('categories');
-                if (el) el.scrollIntoView({ behavior: 'smooth' });
-              }}
-            />
+            <Hero onShopProducts={handleViewAllProducts} />
             <Categories onSelectCategory={handleSelectCategory} />
             <BestSellers
               query={searchQuery}
