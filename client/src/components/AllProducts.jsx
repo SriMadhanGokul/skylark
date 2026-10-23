@@ -1,5 +1,5 @@
 import { useState, useMemo, useEffect } from 'react';
-import { ArrowLeft, Search, SlidersHorizontal, Sparkles, Filter, X } from 'lucide-react';
+import { ArrowLeft, Search, SlidersHorizontal, Filter, X } from 'lucide-react';
 import ProductCard from './ProductCard.jsx';
 import TrustIcon from './TrustIcon.jsx';
 import { products, categories, trust } from '../data/content.js';
@@ -89,37 +89,11 @@ export default function AllProducts({
 
       {/* Main Content Area */}
       <div className="mx-auto max-w-[1280px] px-4 pt-8 lg:px-8">
-        {/* Banner Section */}
-        <div className="rounded-3xl bg-gradient-to-r from-[#2c241c] via-[#3a3025] to-[#25201b] p-6 lg:p-10 text-white shadow-md mb-8">
-          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
-            <div>
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-gold/20 px-3 py-1 text-[11px] font-bold text-gold tracking-wider uppercase mb-3">
-                <Sparkles size={13} /> Complete Pet Wellness Range
-              </span>
-              <h1 className="font-serif text-3xl lg:text-4xl font-bold leading-tight">
-                {selectedCategory === 'All' ? 'All Pet Care Products' : selectedCategory}
-              </h1>
-              <p className="mt-2 max-w-xl text-xs lg:text-sm text-neutral-300 leading-relaxed">
-                Veterinarian-formulated, gentle everyday grooming essentials crafted with natural actives. 100% free of Parabens, Sulphates, and Silicones.
-              </p>
-            </div>
-            <div className="flex items-center gap-4 text-xs text-neutral-300 bg-white/10 backdrop-blur-sm rounded-2xl p-4 shrink-0">
-              <div className="text-center px-2">
-                <p className="text-2xl font-bold text-gold">{products.length}</p>
-                <p className="text-[10px] uppercase font-semibold text-neutral-400">Products</p>
-              </div>
-              <div className="h-8 w-px bg-white/20" />
-              <div className="text-center px-2">
-                <p className="text-2xl font-bold text-gold">100%</p>
-                <p className="text-[10px] uppercase font-semibold text-neutral-400">Pet Safe</p>
-              </div>
-              <div className="h-8 w-px bg-white/20" />
-              <div className="text-center px-2">
-                <p className="text-2xl font-bold text-gold">4.9★</p>
-                <p className="text-[10px] uppercase font-semibold text-neutral-400">Rating</p>
-              </div>
-            </div>
-          </div>
+        {/* Page Title */}
+        <div className="mb-6">
+          <h1 className="font-serif text-2xl sm:text-3xl font-bold text-ink">
+            {selectedCategory === 'All' ? 'All Products' : selectedCategory}
+          </h1>
         </div>
 
         {/* Filter Tabs and Search Bar */}

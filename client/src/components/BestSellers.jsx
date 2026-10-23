@@ -1,4 +1,3 @@
-import { ArrowRight } from 'lucide-react';
 import ProductCard from './ProductCard.jsx';
 import TrustIcon from './TrustIcon.jsx';
 import { products, trust } from '../data/content.js';
@@ -19,15 +18,6 @@ export default function BestSellers({
         <h2 className="section-title flex items-center gap-3">
           Our Best Selling Products <i className="h-[2px] w-7 bg-gold" />
         </h2>
-        {onViewAllProducts && (
-          <button
-            onClick={onViewAllProducts}
-            className="flex items-center gap-1.5 text-xs font-bold text-ink hover:text-gold transition-colors group cursor-pointer"
-          >
-            <span>View All Products</span>
-            <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
-          </button>
-        )}
       </div>
 
       <div className="mt-4 grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-5">
@@ -48,6 +38,18 @@ export default function BestSellers({
           </p>
         )}
       </div>
+
+      {/* Centered View All Products Button */}
+      {onViewAllProducts && (
+        <div className="mt-8 flex justify-center">
+          <button
+            onClick={onViewAllProducts}
+            className="flex items-center justify-center rounded-lg bg-[#2e5d37] hover:bg-[#244b2c] px-8 py-3.5 text-xs sm:text-sm font-bold tracking-wider text-white shadow-sm hover:shadow-md transition-all active:scale-95 cursor-pointer uppercase"
+          >
+            VIEW ALL PRODUCTS
+          </button>
+        </div>
+      )}
 
       {/* Trust Badges */}
       <div className="mt-8 rounded-2xl bg-neutral-100/80 p-4 sm:p-6 border border-neutral-200/60 shadow-xs">
