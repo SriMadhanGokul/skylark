@@ -1,7 +1,7 @@
 export const IMG = {
   logo: '/images/logo.png',
   hero: '/images/pets-hero-banner.png',
-  cta: '/images/cta-pets.jpg',
+  cta: '/images/image.png',
 };
 
 export const categories = [
