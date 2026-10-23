@@ -23,14 +23,14 @@ export default function CtaBanner({ onShopNow }) {
             {onShopNow ? (
               <button
                 onClick={onShopNow}
-                className="inline-flex h-9 px-5 items-center justify-center gap-2 rounded-xl bg-ink text-xs font-semibold text-white hover:bg-neutral-800 transition-colors cursor-pointer shadow-sm active:scale-95"
+                className="inline-flex h-9 px-5 items-center justify-center gap-2 rounded-none bg-ink text-xs font-semibold text-white hover:bg-neutral-800 transition-colors cursor-pointer shadow-sm active:scale-95"
               >
                 Shop Now <ArrowRight size={13} />
               </button>
             ) : (
               <a
                 href="#products"
-                className="inline-flex h-9 px-5 items-center justify-center gap-2 rounded-xl bg-ink text-xs font-semibold text-white hover:bg-neutral-800 transition-colors shadow-sm"
+                className="inline-flex h-9 px-5 items-center justify-center gap-2 rounded-none bg-ink text-xs font-semibold text-white hover:bg-neutral-800 transition-colors shadow-sm"
               >
                 Shop Now <ArrowRight size={13} />
               </a>

@@ -6,3 +6,16 @@ body { @apply font-sans text-ink bg-white antialiased; }
 .section-title { @apply font-serif font-bold text-[28px] leading-none text-ink; }
 .under { @apply block h-[2px] w-7 bg-gold mt-2; }
 :focus-visible { outline: 2px solid #e8a020; outline-offset: 2px; }
+
+/* Sharp edges for all buttons & interactive controls */
+button,
+button *,
+a[role="button"],
+input[type="button"],
+input[type="submit"],
+input[type="reset"],
+.btn,
+.btn * {
+  border-radius: 0px !important;
+}
+

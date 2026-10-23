@@ -93,7 +93,7 @@ export default function Navbar({
           <button
             aria-label="View Wishlist"
             onClick={onOpenWishlist}
-            className="relative p-2 rounded-full hover:bg-neutral-100 text-ink hover:text-rose-500 transition-colors cursor-pointer"
+            className="relative p-2 rounded-none hover:bg-neutral-100 text-ink hover:text-rose-500 transition-colors cursor-pointer"
           >
             <Heart
               size={20}
@@ -101,7 +101,7 @@ export default function Navbar({
               className={wishlistCount > 0 ? 'fill-rose-500 text-rose-500' : ''}
             />
             {wishlistCount > 0 && (
-              <span className="absolute -right-1 -top-1 grid h-4 min-w-[16px] px-1 place-items-center rounded-full bg-rose-500 text-[9px] font-bold text-white shadow-xs">
+              <span className="absolute -right-1 -top-1 grid h-4 min-w-[16px] px-1 place-items-center rounded-none bg-rose-500 text-[9px] font-bold text-white shadow-xs">
                 {wishlistCount}
               </span>
             )}
@@ -110,18 +110,18 @@ export default function Navbar({
           <button
             aria-label="View Shopping Cart"
             onClick={onOpenCart}
-            className="relative p-2 rounded-full hover:bg-neutral-100 text-ink hover:text-gold transition-colors cursor-pointer"
+            className="relative p-2 rounded-none hover:bg-neutral-100 text-ink hover:text-gold transition-colors cursor-pointer"
           >
             <ShoppingCart size={20} strokeWidth={1.8} />
             {cartCount > 0 && (
-              <span className="absolute -right-1 -top-1 grid h-4 min-w-[16px] px-1 place-items-center rounded-full bg-gold text-[9px] font-bold text-white shadow-xs animate-scale">
+              <span className="absolute -right-1 -top-1 grid h-4 min-w-[16px] px-1 place-items-center rounded-none bg-gold text-[9px] font-bold text-white shadow-xs animate-scale">
                 {cartCount}
               </span>
             )}
           </button>
 
           <button
-            className="lg:hidden p-2 rounded-lg text-ink hover:bg-neutral-100"
+            className="lg:hidden p-2 rounded-none text-ink hover:bg-neutral-100"
             aria-label="Menu"
             onClick={() => setOpen(!open)}
           >

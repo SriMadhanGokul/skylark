@@ -44,7 +44,7 @@ export default function BestSellers({
         <div className="mt-8 flex justify-center">
           <button
             onClick={onViewAllProducts}
-            className="flex items-center justify-center rounded-lg bg-ink hover:bg-neutral-800 px-8 py-3.5 text-xs sm:text-sm font-bold tracking-wider text-white shadow-sm hover:shadow-md transition-all active:scale-95 cursor-pointer uppercase"
+            className="flex items-center justify-center rounded-none bg-ink hover:bg-neutral-800 px-8 py-3.5 text-xs sm:text-sm font-bold tracking-wider text-white shadow-sm hover:shadow-md transition-all active:scale-95 cursor-pointer uppercase"
           >
             VIEW ALL PRODUCTS
           </button>

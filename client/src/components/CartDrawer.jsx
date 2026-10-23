@@ -46,7 +46,7 @@ export default function CartDrawer({
             </div>
             <button
               onClick={onClose}
-              className="rounded-full p-1.5 text-neutral-400 hover:bg-neutral-100 hover:text-ink transition-colors"
+              className="rounded-none p-1.5 text-neutral-400 hover:bg-neutral-100 hover:text-ink transition-colors"
               aria-label="Close cart"
             >
               <X size={18} />
@@ -57,7 +57,7 @@ export default function CartDrawer({
           <div className="flex-1 overflow-y-auto p-6 scrollbar-thin">
             {cart.length === 0 ? (
               <div className="flex h-full flex-col items-center justify-center text-center">
-                <div className="grid h-16 w-16 place-items-center rounded-full bg-neutral-100 text-neutral-400 mb-4">
+                <div className="grid h-16 w-16 place-items-center rounded-none bg-neutral-100 text-neutral-400 mb-4">
                   <ShoppingBag size={30} />
                 </div>
                 <h3 className="text-base font-bold text-ink">Your cart is empty</h3>
@@ -69,7 +69,7 @@ export default function CartDrawer({
                     onClose();
                     if (onExploreProducts) onExploreProducts();
                   }}
-                  className="mt-6 flex items-center gap-2 rounded-xl bg-ink px-5 py-2.5 text-xs font-bold text-white hover:bg-neutral-800 transition-colors"
+                  className="mt-6 flex items-center gap-2 rounded-none bg-ink px-5 py-2.5 text-xs font-bold text-white hover:bg-neutral-800 transition-colors"
                 >
                   Start Shopping <ArrowRight size={14} />
                 </button>
@@ -78,7 +78,7 @@ export default function CartDrawer({
               <div className="divide-y divide-neutral-100">
                 {cart.map((item) => (
                   <div key={item.id} className="flex gap-4 py-4 first:pt-0 last:pb-0">
-                    <div className="h-20 w-20 shrink-0 overflow-hidden rounded-xl border border-neutral-200 bg-neutral-50 p-1.5">
+                    <div className="h-20 w-20 shrink-0 overflow-hidden rounded-none border border-neutral-200 bg-neutral-50 p-1.5">
                       <Img
                         src={item.img}
                         alt={item.name}
@@ -103,10 +103,10 @@ export default function CartDrawer({
 
                       <div className="flex items-center justify-between mt-2">
                         {/* Qty controls */}
-                        <div className="flex items-center rounded-lg border border-neutral-200 bg-neutral-50">
+                        <div className="flex items-center rounded-none border border-neutral-200 bg-neutral-50">
                           <button
                             onClick={() => onUpdateQty(item.id, Math.max(1, item.quantity - 1))}
-                            className="h-7 w-7 text-neutral-600 hover:bg-neutral-200 rounded-l-lg grid place-items-center"
+                            className="h-7 w-7 text-neutral-600 hover:bg-neutral-200 rounded-none grid place-items-center"
                           >
                             <Minus size={11} />
                           </button>
@@ -115,7 +115,7 @@ export default function CartDrawer({
                           </span>
                           <button
                             onClick={() => onUpdateQty(item.id, item.quantity + 1)}
-                            className="h-7 w-7 text-neutral-600 hover:bg-neutral-200 rounded-r-lg grid place-items-center"
+                            className="h-7 w-7 text-neutral-600 hover:bg-neutral-200 rounded-none grid place-items-center"
                           >
                             <Plus size={11} />
                           </button>
@@ -162,7 +162,7 @@ export default function CartDrawer({
               <div className="mt-4 flex flex-col gap-2">
                 <button
                   onClick={handleWhatsAppOrder}
-                  className="flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-emerald-600 text-xs font-bold text-white shadow-md hover:bg-emerald-700 active:scale-95 transition-all"
+                  className="flex h-11 w-full items-center justify-center gap-2 rounded-none bg-emerald-600 text-xs font-bold text-white shadow-md hover:bg-emerald-700 active:scale-95 transition-all"
                 >
                   Order via WhatsApp Instant <ArrowRight size={14} />
                 </button>
@@ -171,7 +171,7 @@ export default function CartDrawer({
                     onClose();
                     if (onCheckout) onCheckout();
                   }}
-                  className="flex h-10 w-full items-center justify-center gap-2 rounded-xl bg-ink text-xs font-bold text-white hover:bg-neutral-800 transition-colors"
+                  className="flex h-10 w-full items-center justify-center gap-2 rounded-none bg-ink text-xs font-bold text-white hover:bg-neutral-800 transition-colors"
                 >
                   Proceed to Direct Checkout
                 </button>

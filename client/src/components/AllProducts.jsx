@@ -98,7 +98,7 @@ export default function AllProducts({
               placeholder="Search by product name, ingredient, or benefit..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full rounded-xl bg-neutral-50 pl-10 pr-9 py-2.5 text-xs text-ink placeholder:text-neutral-400 outline-none border border-neutral-200 focus:border-gold transition-colors"
+              className="w-full rounded-none bg-neutral-50 pl-10 pr-9 py-2.5 text-xs text-ink placeholder:text-neutral-400 outline-none border border-neutral-200 focus:border-gold transition-colors"
             />
             {search && (
               <button
@@ -118,7 +118,7 @@ export default function AllProducts({
               <select
                 value={selectedCategory}
                 onChange={(e) => setSelectedCategory(e.target.value)}
-                className="rounded-xl border border-neutral-200 bg-neutral-50 px-3 py-2 text-xs font-semibold text-ink outline-none focus:border-gold cursor-pointer"
+                className="rounded-none border border-neutral-200 bg-neutral-50 px-3 py-2 text-xs font-semibold text-ink outline-none focus:border-gold cursor-pointer"
               >
                 {allCategoryTabs.map((tab) => (
                   <option key={tab.name} value={tab.name}>
@@ -135,7 +135,7 @@ export default function AllProducts({
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
-                className="rounded-xl border border-neutral-200 bg-neutral-50 px-3 py-2 text-xs font-semibold text-ink outline-none focus:border-gold cursor-pointer"
+                className="rounded-none border border-neutral-200 bg-neutral-50 px-3 py-2 text-xs font-semibold text-ink outline-none focus:border-gold cursor-pointer"
               >
                 <option value="featured">Featured First</option>
                 <option value="price-low">Price: Low to High</option>
@@ -203,7 +203,7 @@ export default function AllProducts({
                 setSelectedCategory('All');
                 setSearch('');
               }}
-              className="mt-4 inline-flex items-center gap-2 rounded-xl bg-ink px-5 py-2.5 text-xs font-bold text-white hover:bg-neutral-800 transition-colors"
+              className="mt-4 inline-flex items-center gap-2 rounded-none bg-ink px-5 py-2.5 text-xs font-bold text-white hover:bg-neutral-800 transition-colors"
             >
               Reset Filters & Show All
             </button>

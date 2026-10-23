@@ -105,7 +105,7 @@ export default function ProductDetail({
                     type="button"
                     onClick={handlePrevImage}
                     aria-label="Previous image"
-                    className="absolute left-3 top-1/2 -translate-y-1/2 z-20 grid h-10 w-10 place-items-center rounded-full bg-white/90 text-ink shadow-md hover:bg-white hover:scale-110 active:scale-95 transition-all cursor-pointer border border-neutral-200/80"
+                    className="absolute left-3 top-1/2 -translate-y-1/2 z-20 grid h-10 w-10 place-items-center rounded-none bg-white/90 text-ink shadow-md hover:bg-white hover:scale-110 active:scale-95 transition-all cursor-pointer border border-neutral-200/80"
                   >
                     <ChevronLeft size={20} />
                   </button>
@@ -113,7 +113,7 @@ export default function ProductDetail({
                     type="button"
                     onClick={handleNextImage}
                     aria-label="Next image"
-                    className="absolute right-3 top-1/2 -translate-y-1/2 z-20 grid h-10 w-10 place-items-center rounded-full bg-white/90 text-ink shadow-md hover:bg-white hover:scale-110 active:scale-95 transition-all cursor-pointer border border-neutral-200/80"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 z-20 grid h-10 w-10 place-items-center rounded-none bg-white/90 text-ink shadow-md hover:bg-white hover:scale-110 active:scale-95 transition-all cursor-pointer border border-neutral-200/80"
                   >
                     <ChevronRight size={20} />
                   </button>
@@ -135,14 +135,14 @@ export default function ProductDetail({
                     <button
                       key={idx}
                       onClick={() => setActiveImage(imgUrl)}
-                      className={`relative h-20 w-20 shrink-0 overflow-hidden rounded-xl border-2 transition-all p-1 bg-neutral-50 ${
+                      className={`relative h-20 w-20 shrink-0 overflow-hidden rounded-none border-2 transition-all p-1 bg-neutral-50 ${
                         activeImage === imgUrl ? 'border-gold shadow-md scale-105' : 'border-neutral-200 hover:border-neutral-400'
                       }`}
                     >
                       <Img
                         src={imgUrl}
                         alt={`${product.name} preview ${idx + 1}`}
-                        className="h-full w-full object-contain rounded-lg"
+                        className="h-full w-full object-contain rounded-none"
                         placeholder="bg-neutral-100"
                       />
                     </button>
@@ -226,17 +226,17 @@ export default function ProductDetail({
 
               {/* Quantity and Actions */}
               <div className="mt-6 flex flex-wrap items-center gap-4">
-                <div className="flex items-center rounded-xl border border-neutral-300 bg-white">
+                <div className="flex items-center rounded-none border border-neutral-300 bg-white">
                   <button
                     onClick={() => setQty(Math.max(1, qty - 1))}
-                    className="h-11 w-10 text-base font-bold text-neutral-600 hover:bg-neutral-100 transition-colors rounded-l-xl"
+                    className="h-11 w-10 text-base font-bold text-neutral-600 hover:bg-neutral-100 transition-colors rounded-none"
                   >
                     -
                   </button>
                   <span className="w-10 text-center text-sm font-bold text-ink">{qty}</span>
                   <button
                     onClick={() => setQty(qty + 1)}
-                    className="h-11 w-10 text-base font-bold text-neutral-600 hover:bg-neutral-100 transition-colors rounded-r-xl"
+                    className="h-11 w-10 text-base font-bold text-neutral-600 hover:bg-neutral-100 transition-colors rounded-none"
                   >
                     +
                   </button>
@@ -244,7 +244,7 @@ export default function ProductDetail({
 
                 <button
                   onClick={handleAdd}
-                  className={`flex-1 min-w-[150px] flex h-11 items-center justify-center gap-2 rounded-xl text-xs font-bold tracking-wide transition-all ${
+                  className={`flex-1 min-w-[150px] flex h-11 items-center justify-center gap-2 rounded-none text-xs font-bold tracking-wide transition-all ${
                     added
                       ? 'bg-emerald-600 text-white'
                       : 'bg-ink text-white hover:bg-neutral-800 hover:shadow-lg active:scale-95'
@@ -257,7 +257,7 @@ export default function ProductDetail({
                 <button
                   type="button"
                   onClick={() => onToggleWishlist && onToggleWishlist(product)}
-                  className={`flex h-11 px-4 items-center gap-2 rounded-xl border text-xs font-bold transition-all cursor-pointer ${
+                  className={`flex h-11 px-4 items-center gap-2 rounded-none border text-xs font-bold transition-all cursor-pointer ${
                     isWishlisted
                       ? 'border-rose-300 bg-rose-50 text-rose-500 shadow-sm'
                       : 'border-neutral-300 bg-white text-neutral-700 hover:border-neutral-400 hover:text-rose-500'

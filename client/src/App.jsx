@@ -162,7 +162,7 @@ export default function App() {
           {toastMessage.type === 'cart' && (
             <button
               onClick={() => setIsCartOpen(true)}
-              className="ml-2 rounded-lg bg-gold/20 px-2.5 py-1 text-[10px] font-bold text-gold hover:bg-gold/30 cursor-pointer"
+              className="ml-2 rounded-none bg-gold/20 px-2.5 py-1 text-[10px] font-bold text-gold hover:bg-gold/30 cursor-pointer"
             >
               View Cart
             </button>
@@ -170,7 +170,7 @@ export default function App() {
           {toastMessage.type === 'heart' && (
             <button
               onClick={() => setIsWishlistOpen(true)}
-              className="ml-2 rounded-lg bg-rose-500/20 px-2.5 py-1 text-[10px] font-bold text-rose-300 hover:bg-rose-500/30 cursor-pointer"
+              className="ml-2 rounded-none bg-rose-500/20 px-2.5 py-1 text-[10px] font-bold text-rose-300 hover:bg-rose-500/30 cursor-pointer"
             >
               View Wishlist
             </button>

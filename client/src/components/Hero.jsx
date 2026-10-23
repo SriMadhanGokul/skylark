@@ -24,7 +24,7 @@ export default function Hero({ onShopProducts }) {
           <div className="mt-5 flex flex-wrap gap-3">
             <button
               onClick={onShopProducts}
-              className="flex h-10 px-5 items-center justify-center gap-2 rounded-xl bg-ink text-xs font-semibold text-white shadow-sm hover:bg-neutral-800 transition-colors cursor-pointer"
+              className="flex h-10 px-5 items-center justify-center gap-2 rounded-none bg-ink text-xs font-semibold text-white shadow-sm hover:bg-neutral-800 transition-colors cursor-pointer"
             >
               Shop Products <ArrowRight size={13} />
             </button>

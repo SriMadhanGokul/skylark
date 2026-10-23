@@ -13,8 +13,8 @@ export default function Testimonials() {
       <div className="flex items-center justify-between">
         <h2 className="section-title flex items-center gap-3">Happy Customers <i className="h-[2px] w-7 bg-gold" /></h2>
         <div className="flex gap-3">
-          <button aria-label="Previous reviews" onClick={() => move(-1)} className="grid h-8 w-8 place-items-center rounded-full bg-neutral-100"><ChevronLeft size={15} /></button>
-          <button aria-label="Next reviews" onClick={() => move(1)} className="grid h-8 w-8 place-items-center rounded-full bg-neutral-100"><ChevronRight size={15} /></button>
+          <button aria-label="Previous reviews" onClick={() => move(-1)} className="grid h-8 w-8 place-items-center rounded-none bg-neutral-100"><ChevronLeft size={15} /></button>
+          <button aria-label="Next reviews" onClick={() => move(1)} className="grid h-8 w-8 place-items-center rounded-none bg-neutral-100"><ChevronRight size={15} /></button>
         </div>
       </div>
       <div className="mt-4 grid gap-3 lg:grid-cols-3">

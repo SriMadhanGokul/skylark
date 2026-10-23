@@ -59,7 +59,7 @@ export default function ProductCard({
           onClick={handleWishlist}
           aria-label={isWishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
           title={isWishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
-          className={`absolute top-2 right-2 z-10 grid h-7 w-7 place-items-center rounded-full shadow-sm backdrop-blur-xs transition-all hover:scale-110 active:scale-90 ${
+          className={`absolute top-2 right-2 z-10 grid h-7 w-7 place-items-center rounded-none shadow-sm backdrop-blur-xs transition-all hover:scale-110 active:scale-90 ${
             isWishlisted
               ? 'bg-rose-50 text-rose-500 border border-rose-200'
               : 'bg-white/90 text-neutral-400 hover:text-rose-500 border border-neutral-200/60'
@@ -69,7 +69,7 @@ export default function ProductCard({
         </button>
 
         {p.images && p.images.length > 1 && (
-          <span className="absolute bottom-1.5 right-1.5 rounded-full bg-ink/75 px-1.5 py-0.5 text-[8px] font-bold text-white backdrop-blur-xs">
+          <span className="absolute bottom-1.5 right-1.5 rounded-none bg-ink/75 px-1.5 py-0.5 text-[8px] font-bold text-white backdrop-blur-xs">
             {p.images.length} photos
           </span>
         )}
@@ -92,7 +92,7 @@ export default function ProductCard({
         <button
           type="button"
           onClick={handleAdd}
-          className="flex h-8 w-full items-center justify-center gap-1.5 rounded-lg bg-ink text-[10px] font-bold text-white shadow-sm hover:bg-neutral-800 active:scale-95 transition-all"
+          className="flex h-8 w-full items-center justify-center gap-1.5 rounded-none bg-ink text-[10px] font-bold text-white shadow-sm hover:bg-neutral-800 active:scale-95 transition-all"
         >
           <ShoppingCart size={12} /> Add to Cart
         </button>

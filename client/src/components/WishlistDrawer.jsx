@@ -34,7 +34,7 @@ export default function WishlistDrawer({
             </div>
             <button
               onClick={onClose}
-              className="rounded-full p-1.5 text-neutral-400 hover:bg-neutral-100 hover:text-ink transition-colors"
+              className="rounded-none p-1.5 text-neutral-400 hover:bg-neutral-100 hover:text-ink transition-colors"
               aria-label="Close wishlist"
             >
               <X size={18} />
@@ -45,7 +45,7 @@ export default function WishlistDrawer({
           <div className="flex-1 overflow-y-auto p-6 scrollbar-thin">
             {wishlist.length === 0 ? (
               <div className="flex h-full flex-col items-center justify-center text-center">
-                <div className="grid h-16 w-16 place-items-center rounded-full bg-rose-50 text-rose-400 mb-4">
+                <div className="grid h-16 w-16 place-items-center rounded-none bg-rose-50 text-rose-400 mb-4">
                   <Heart size={30} />
                 </div>
                 <h3 className="text-base font-bold text-ink">Your wishlist is empty</h3>
@@ -57,7 +57,7 @@ export default function WishlistDrawer({
                     onClose();
                     if (onExploreProducts) onExploreProducts();
                   }}
-                  className="mt-6 flex items-center gap-2 rounded-xl bg-ink px-5 py-2.5 text-xs font-bold text-white hover:bg-neutral-800 transition-colors"
+                  className="mt-6 flex items-center gap-2 rounded-none bg-ink px-5 py-2.5 text-xs font-bold text-white hover:bg-neutral-800 transition-colors"
                 >
                   Explore Products <ArrowRight size={14} />
                 </button>
@@ -71,7 +71,7 @@ export default function WishlistDrawer({
                         onClose();
                         if (onSelectProduct) onSelectProduct(item);
                       }}
-                      className="h-20 w-20 shrink-0 cursor-pointer overflow-hidden rounded-xl border border-neutral-200 bg-neutral-50 p-1.5 hover:border-gold transition-colors"
+                      className="h-20 w-20 shrink-0 cursor-pointer overflow-hidden rounded-none border border-neutral-200 bg-neutral-50 p-1.5 hover:border-gold transition-colors"
                     >
                       <Img
                         src={item.img}
@@ -113,7 +113,7 @@ export default function WishlistDrawer({
                             onAddToCart(item);
                             onRemoveItem(item);
                           }}
-                          className="flex h-8 flex-1 items-center justify-center gap-1.5 rounded-lg bg-ink text-[10px] font-bold text-white hover:bg-neutral-800 active:scale-95 transition-all"
+                          className="flex h-8 flex-1 items-center justify-center gap-1.5 rounded-none bg-ink text-[10px] font-bold text-white hover:bg-neutral-800 active:scale-95 transition-all"
                         >
                           <ShoppingCart size={12} /> Move to Cart
                         </button>
@@ -133,13 +133,13 @@ export default function WishlistDrawer({
                   wishlist.forEach((item) => onAddToCart(item));
                   wishlist.forEach((item) => onRemoveItem(item));
                 }}
-                className="flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-ink text-xs font-bold text-white shadow-md hover:bg-neutral-800 active:scale-95 transition-all"
+                className="flex h-11 w-full items-center justify-center gap-2 rounded-none bg-ink text-xs font-bold text-white shadow-md hover:bg-neutral-800 active:scale-95 transition-all"
               >
                 <ShoppingCart size={15} /> Move All to Cart
               </button>
               <button
                 onClick={onClose}
-                className="mt-2 flex h-9 w-full items-center justify-center text-xs font-semibold text-neutral-600 hover:text-ink transition-colors"
+                className="mt-2 flex h-9 w-full items-center justify-center rounded-none text-xs font-semibold text-neutral-600 hover:text-ink transition-colors"
               >
                 Continue Shopping
               </button>
