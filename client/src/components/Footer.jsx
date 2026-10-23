@@ -1,11 +1,23 @@
-import { Facebook, Instagram, Youtube, MessageCircle, Phone, Mail, MapPin, PawPrint, Building } from 'lucide-react';
+import { Facebook, Instagram, Youtube, MessageCircle, Phone, Mail, MapPin, PawPrint } from 'lucide-react';
 import Img from './Img.jsx';
 import { IMG } from '../data/content.js';
 
-const quick = ['Home', 'Shop', 'Shop by Category', 'About Us', 'Contact'];
-const cats = ['Pet Shampoos', 'Paw Creams', 'Deodorants', 'Oral Sprays'];
+const quick = [
+  ['Home', '#home'],
+  ['Shop', '#products'],
+  ['Shop by Category', '#categories'],
+  ['About Us', '#about'],
+  ['Contact', '#contact'],
+];
 
-export default function Footer({ onContactClick }) {
+const cats = [
+  ['Pet Shampoos', '#categories'],
+  ['Paw Creams', '#categories'],
+  ['Deodorants', '#categories'],
+  ['Oral Sprays', '#categories'],
+];
+
+export default function Footer() {
   return (
     <footer id="contact" className="bg-footer text-white">
       <div className="mx-auto max-w-[900px] xl:max-w-[1280px] px-4 py-8 lg:px-6">
@@ -27,15 +39,9 @@ export default function Footer({ onContactClick }) {
           <div>
             <h3 className="text-[11px] font-semibold text-gold uppercase tracking-wider">Quick Links</h3>
             <ul className="mt-3 space-y-1.5 text-[9px] text-neutral-300">
-              {quick.map((l) => (
+              {quick.map(([l, h]) => (
                 <li key={l}>
-                  {l === 'Contact' ? (
-                    <button onClick={onContactClick} className="hover:text-gold transition-colors text-left">
-                      {l}
-                    </button>
-                  ) : (
-                    <a href="#home" className="hover:text-gold transition-colors">{l}</a>
-                  )}
+                  <a href={h} className="hover:text-gold transition-colors">{l}</a>
                 </li>
               ))}
             </ul>
@@ -43,9 +49,9 @@ export default function Footer({ onContactClick }) {
           <div>
             <h3 className="text-[11px] font-semibold text-gold uppercase tracking-wider">Shop Categories</h3>
             <ul className="mt-3 space-y-1.5 text-[9px] text-neutral-300">
-              {cats.map((l) => (
+              {cats.map(([l, h]) => (
                 <li key={l}>
-                  <a href="#categories" className="hover:text-gold transition-colors">{l}</a>
+                  <a href={h} className="hover:text-gold transition-colors">{l}</a>
                 </li>
               ))}
             </ul>
@@ -63,55 +69,9 @@ export default function Footer({ onContactClick }) {
               </li>
               <li className="flex items-start gap-3">
                 <MapPin size={14} className="mt-0.5 shrink-0 text-gold" />
-                <span>FF 12 -A, VANDEMATRAM CROSSWIND, NEAR NEW S G ROAD, GOTA, AHMEDABAD - 382481</span>
+                <span>FF 12 -A, VANDEMATRAM CROSSWIND, NEAR NEW S G ROAD, GOTA, AHMEDABAD – 382481, GUJRAT</span>
               </li>
             </ul>
-          </div>
-        </div>
-
-        {/* Dedicated Owner Details Section */}
-        <div className="mt-8 rounded-xl border border-neutral-700/70 bg-neutral-900/80 p-4 lg:p-5">
-          <div className="flex flex-wrap items-center justify-between gap-2 border-b border-neutral-800 pb-3">
-            <div className="flex items-center gap-2.5">
-              <span className="grid h-7 w-7 place-items-center rounded-lg bg-gold/20 text-gold">
-                <Building size={14} />
-              </span>
-              <div>
-                <span className="text-[9px] font-bold tracking-wider text-gold uppercase">Business & Owner Details</span>
-                <h4 className="text-[12px] font-bold text-white tracking-wide">SKYLARK LIFECARE AND SCIENCES</h4>
-              </div>
-            </div>
-            {onContactClick && (
-              <button
-                onClick={onContactClick}
-                className="rounded-lg bg-gold/15 px-3 py-1 text-[9px] font-semibold text-gold hover:bg-gold hover:text-ink transition-all"
-              >
-                View Full Contact Card
-              </button>
-            )}
-          </div>
-
-          <div className="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-4 text-[10px]">
-            <div className="rounded-lg bg-neutral-800/50 p-2.5">
-              <span className="text-neutral-400 block text-[8px] uppercase tracking-wider">Owner / Name</span>
-              <span className="font-semibold text-white">SKYLARK LIFECARE AND SCIENCES</span>
-            </div>
-            <div className="rounded-lg bg-neutral-800/50 p-2.5">
-              <span className="text-neutral-400 block text-[8px] uppercase tracking-wider">Phone Number</span>
-              <a href="tel:8059053151" className="font-semibold text-gold hover:underline">8059053151</a>
-            </div>
-            <div className="rounded-lg bg-neutral-800/50 p-2.5">
-              <span className="text-neutral-400 block text-[8px] uppercase tracking-wider">Email ID</span>
-              <a href="mailto:grouptheskylark@gmail.com" className="font-semibold text-gold hover:underline break-all">grouptheskylark@gmail.com</a>
-            </div>
-            <div className="rounded-lg bg-neutral-800/50 p-2.5">
-              <span className="text-neutral-400 block text-[8px] uppercase tracking-wider">City / State / Pin</span>
-              <span className="font-semibold text-white">AHMEDABAD, GUJRAT – 382481</span>
-            </div>
-            <div className="sm:col-span-2 lg:col-span-4 rounded-lg bg-neutral-800/50 p-2.5">
-              <span className="text-neutral-400 block text-[8px] uppercase tracking-wider">Full Address</span>
-              <span className="text-neutral-200 font-medium">FF 12 -A, VANDEMATRAM CROSSWIND, NEAR NEW S G ROAD, GOTA, AHMEDABAD - 382481</span>
-            </div>
           </div>
         </div>
       </div>
