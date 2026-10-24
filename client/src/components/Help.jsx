@@ -129,6 +129,13 @@ export default function Help({ onBackHome, onExploreProducts }) {
     <div className="min-h-screen bg-[#FAF7F2] text-[#2D261E] font-sans selection:bg-[#B98A35]/20">
       {/* Top Banner Breadcrumb */}
       <div className="pt-8 pb-4 text-center">
+        <div className="mx-auto mb-3 flex items-center justify-center">
+          <img
+            src="/images/logo.png"
+            alt="Skylark Lifecare and Sciences Logo"
+            className="h-16 w-16 rounded-full border border-[#E8DFD2] bg-white object-contain p-1 shadow-xs"
+          />
+        </div>
         <p className="text-[11px] font-medium tracking-[0.25em] text-[#B98A35] uppercase">
           — CUSTOMER CARE —
         </p>
