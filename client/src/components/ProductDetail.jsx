@@ -189,9 +189,14 @@ export default function ProductDetail({
               <div className="mt-4 sm:mt-5 flex flex-wrap items-center justify-between gap-2.5 rounded-xl sm:rounded-2xl bg-[#faf6f0] p-3 sm:p-4 border border-gold/20 w-full min-w-0">
                 <div className="flex flex-wrap items-baseline gap-2">
                   <span className="text-2xl sm:text-3xl font-bold text-ink">₹ {product.price.toFixed(2)}</span>
-                  {product.originalPrice && (
-                    <span className="text-sm sm:text-base text-neutral-400 line-through">
-                      ₹ {product.originalPrice.toFixed(2)}
+                  {product.originalPrice && product.originalPrice > product.price && (
+                    <span className="text-sm sm:text-base text-neutral-400">
+                      MRP <span className="line-through">₹ {product.originalPrice.toFixed(2)}</span>
+                    </span>
+                  )}
+                  {discount > 0 && (
+                    <span className="text-xs sm:text-sm font-bold text-emerald-600">
+                      ({discount}% OFF)
                     </span>
                   )}
                   <span className="text-[11px] sm:text-xs font-semibold text-gold">
@@ -356,7 +361,19 @@ export default function ProductDetail({
                     </h4>
                   </div>
                   <div>
-                    <p className="mt-1 text-[11px] font-bold text-ink">₹ {p.price.toFixed(2)}</p>
+                    <div className="mt-1 flex flex-wrap items-center justify-center gap-x-1.5 gap-y-0.5">
+                      <span className="text-[11px] sm:text-xs font-bold text-ink">₹ {p.price.toFixed(2)}</span>
+                      {p.originalPrice && p.originalPrice > p.price && (
+                        <span className="text-[9px] sm:text-[10px] text-neutral-400">
+                          MRP <span className="line-through">₹ {p.originalPrice.toFixed(2)}</span>
+                        </span>
+                      )}
+                      {p.originalPrice && p.originalPrice > p.price && (
+                        <span className="text-[9px] sm:text-[10px] font-bold text-emerald-600 whitespace-nowrap">
+                          ({Math.round(((p.originalPrice - p.price) / p.originalPrice) * 100)}% OFF)
+                        </span>
+                      )}
+                    </div>
                     <button className="mt-2 text-[10px] font-bold text-gold group-hover:underline">
                       View Details →
                     </button>

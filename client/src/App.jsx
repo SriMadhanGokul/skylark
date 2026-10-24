@@ -8,12 +8,22 @@ import CtaBanner from './components/CtaBanner.jsx';
 import Footer from './components/Footer.jsx';
 import AllProducts from './components/AllProducts.jsx';
 import ProductDetail from './components/ProductDetail.jsx';
+import Help from './components/Help.jsx';
 import CartDrawer from './components/CartDrawer.jsx';
 import WishlistDrawer from './components/WishlistDrawer.jsx';
 import { CheckCircle2, Heart } from 'lucide-react';
 
 export default function App() {
-  const [currentView, setCurrentView] = useState('home'); // 'home' | 'all-products' | 'product-detail'
+  const getInitialView = () => {
+    if (typeof window !== 'undefined') {
+      const path = window.location.pathname.toLowerCase();
+      if (path === '/help' || path === '/help/') return 'help';
+      if (path === '/products' || path === '/shop') return 'all-products';
+    }
+    return 'home';
+  };
+
+  const [currentView, setCurrentView] = useState(getInitialView); // 'home' | 'all-products' | 'product-detail' | 'help'
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
@@ -21,6 +31,33 @@ export default function App() {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isWishlistOpen, setIsWishlistOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState(null);
+
+  // Sync URL changes with back/forward browser buttons
+  useEffect(() => {
+    const handlePopState = () => {
+      const path = window.location.pathname.toLowerCase();
+      if (path === '/help' || path === '/help/') {
+        setCurrentView('help');
+      } else if (path === '/products' || path === '/shop') {
+        setCurrentView('all-products');
+      } else {
+        setCurrentView('home');
+      }
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
+  const syncUrl = (path) => {
+    try {
+      if (window.location.pathname !== path) {
+        window.history.pushState({}, '', path);
+      }
+    } catch {
+      // ignore history errors
+    }
+  };
 
   // Persistent wishlist
   const [wishlist, setWishlist] = useState(() => {
@@ -97,22 +134,33 @@ export default function App() {
   const handleSelectCategory = (categoryName) => {
     setSelectedCategory(categoryName);
     setCurrentView('all-products');
+    syncUrl('/#products');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleViewAllProducts = () => {
     setSelectedCategory('All');
     setCurrentView('all-products');
+    syncUrl('/#products');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleBackToHome = () => {
     setCurrentView('home');
+    syncUrl('/');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleNavigate = (view, hash) => {
+    if (view === 'help') {
+      setCurrentView('help');
+      syncUrl('/help');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+
     if (view === 'categories') {
+      syncUrl('/');
       if (currentView === 'home') {
         const el = document.getElementById('categories');
         if (el) el.scrollIntoView({ behavior: 'smooth' });
@@ -128,6 +176,7 @@ export default function App() {
 
     if (view === 'home') {
       setCurrentView('home');
+      syncUrl('/');
       if (hash && hash !== '#home') {
         setTimeout(() => {
           const targetId = hash.replace('#', '');
@@ -143,6 +192,7 @@ export default function App() {
     if (view === 'all-products') {
       setSelectedCategory('All');
       setCurrentView('all-products');
+      syncUrl('/#products');
       window.scrollTo({ top: 0, behavior: 'smooth' });
       return;
     }
@@ -192,6 +242,13 @@ export default function App() {
 
       {/* Main View Router */}
       <main className="flex-1">
+        {currentView === 'help' && (
+          <Help
+            onBackHome={handleBackToHome}
+            onExploreProducts={handleViewAllProducts}
+          />
+        )}
+
         {currentView === 'product-detail' && selectedProduct && (
           <ProductDetail
             product={selectedProduct}
@@ -234,7 +291,7 @@ export default function App() {
       </main>
 
       {/* Footer */}
-      <Footer />
+      <Footer onNavigate={handleNavigate} />
 
       {/* Cart Drawer Slide-over */}
       <CartDrawer

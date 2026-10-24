@@ -29,6 +29,11 @@ export default function ProductCard({
     }
   };
 
+  const discount =
+    p.originalPrice && p.originalPrice > p.price
+      ? Math.round(((p.originalPrice - p.price) / p.originalPrice) * 100)
+      : 0;
+
   return (
     <article
       onClick={handleCardClick}
@@ -53,6 +58,13 @@ export default function ProductCard({
           placeholder="bg-neutral-100 rounded-lg"
         />
 
+        {/* Discount Badge on Image */}
+        {discount > 0 && (
+          <span className="absolute top-2 left-2 z-10 rounded-none bg-gold px-2 py-0.5 text-[9px] sm:text-[10px] font-bold text-white shadow-xs tracking-tight">
+            {discount}% OFF
+          </span>
+        )}
+
         {/* Wishlist Button */}
         <button
           type="button"
@@ -75,7 +87,24 @@ export default function ProductCard({
           {p.name}
         </h3>
         <p className="mt-1 text-[10px] font-medium text-neutral-500">{p.size}</p>
-        <p className="mt-1 text-sm font-bold text-ink">₹ {p.price.toFixed(2)}</p>
+
+        {/* Price Section with Offer Price, MRP and Discount % */}
+        <div className="mt-1.5 flex flex-wrap items-center justify-center gap-x-1.5 gap-y-0.5 text-center">
+          <span className="text-xs sm:text-sm font-bold text-ink">
+            ₹ {p.price.toFixed(2)}
+          </span>
+          {p.originalPrice && p.originalPrice > p.price && (
+            <span className="text-[10px] sm:text-[11px] text-neutral-400">
+              MRP <span className="line-through">₹ {p.originalPrice.toFixed(2)}</span>
+            </span>
+          )}
+          {discount > 0 && (
+            <span className="text-[10px] sm:text-[11px] font-bold text-emerald-600 whitespace-nowrap">
+              ({discount}% OFF)
+            </span>
+          )}
+        </div>
+
         <div className="mt-1">
           <Stars size={11} />
         </div>

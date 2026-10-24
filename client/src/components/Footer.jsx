@@ -3,11 +3,12 @@ import Img from './Img.jsx';
 import { IMG } from '../data/content.js';
 
 const quick = [
-  ['Home', '#home'],
-  ['Shop', '#products'],
-  ['Shop by Category', '#categories'],
-  ['About Us', '#about'],
-  ['Contact', '#contact'],
+  ['Home', '#home', 'home'],
+  ['Shop', '#products', 'all-products'],
+  ['Shop by Category', '#categories', 'categories'],
+  ['Help & Returns', '/help', 'help'],
+  ['About Us', '#about', 'home'],
+  ['Contact', '#contact', 'home'],
 ];
 
 const cats = [
@@ -17,7 +18,14 @@ const cats = [
   ['Oral Sprays', '#categories'],
 ];
 
-export default function Footer() {
+export default function Footer({ onNavigate }) {
+  const handleLinkClick = (e, target, view) => {
+    if (view && onNavigate) {
+      e.preventDefault();
+      onNavigate(view, target);
+    }
+  };
+
   return (
     <footer id="contact" className="bg-footer text-white">
       <div className="mx-auto max-w-[900px] xl:max-w-[1280px] px-4 py-8 lg:px-6">
@@ -39,9 +47,15 @@ export default function Footer() {
           <div>
             <h3 className="text-[11px] font-semibold text-gold uppercase tracking-wider">Quick Links</h3>
             <ul className="mt-3 space-y-1.5 text-[9px] text-neutral-300">
-              {quick.map(([l, h]) => (
+              {quick.map(([l, h, v]) => (
                 <li key={l}>
-                  <a href={h} className="hover:text-gold transition-colors">{l}</a>
+                  <a
+                    href={h}
+                    onClick={(e) => handleLinkClick(e, h, v)}
+                    className="hover:text-gold transition-colors cursor-pointer"
+                  >
+                    {l}
+                  </a>
                 </li>
               ))}
             </ul>

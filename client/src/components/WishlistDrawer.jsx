@@ -94,7 +94,19 @@ export default function WishlistDrawer({
                             {item.name}
                           </h4>
                           <p className="text-[10px] text-neutral-500">{item.size} • {item.category}</p>
-                          <p className="text-xs font-bold text-ink mt-1">₹ {item.price.toFixed(2)}</p>
+                          <div className="mt-1 flex flex-wrap items-baseline gap-1.5">
+                            <span className="text-xs font-bold text-ink">₹ {item.price.toFixed(2)}</span>
+                            {item.originalPrice && item.originalPrice > item.price && (
+                              <>
+                                <span className="text-[10px] text-neutral-400">
+                                  MRP <span className="line-through">₹ {item.originalPrice.toFixed(2)}</span>
+                                </span>
+                                <span className="text-[10px] font-bold text-emerald-600">
+                                  ({Math.round(((item.originalPrice - item.price) / item.originalPrice) * 100)}% OFF)
+                                </span>
+                              </>
+                            )}
+                          </div>
                         </div>
 
                         <button

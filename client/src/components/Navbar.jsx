@@ -20,6 +20,7 @@ export default function Navbar({
     { label: 'Shop', view: 'all-products', hash: '#products' },
     { label: 'Shop by Category', view: 'categories', hash: '#categories' },
     { label: 'About Us', view: 'home', hash: '#about' },
+    { label: 'Help', view: 'help', hash: '/help' },
     { label: 'Contact', view: 'home', hash: '#contact' },
   ];
 
@@ -62,6 +63,7 @@ export default function Navbar({
           {navItems.map((item) => {
             const isActive =
               (item.view === 'all-products' && currentView === 'all-products') ||
+              (item.view === 'help' && currentView === 'help') ||
               (item.view === 'home' && currentView === 'home' && item.label === 'Home');
             return (
               <button
