@@ -1,11 +1,13 @@
 import { useState } from 'react';
-import { Search, ShoppingCart, Menu, X, Heart } from 'lucide-react';
+import { Search, ShoppingCart, Menu, X, Heart, Wallet } from 'lucide-react';
 import Img from './Img.jsx';
 import { IMG } from '../data/content.js';
 
 export default function Navbar({
   cartCount,
   wishlistCount = 0,
+  walletBalance = 0,
+  onOpenWallet,
   onSearch,
   searchValue = '',
   onOpenCart,
@@ -79,7 +81,7 @@ export default function Navbar({
           })}
         </nav>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3 sm:gap-4">
           <label className="hidden md:flex h-9 w-[180px] xl:w-[240px] items-center gap-2 rounded-full border border-neutral-300 bg-neutral-50 px-3 focus-within:border-gold transition-colors">
             <Search size={14} className="text-neutral-400" />
             <input
@@ -90,6 +92,20 @@ export default function Navbar({
               className="w-full bg-transparent text-xs outline-none placeholder:text-neutral-400 text-ink"
             />
           </label>
+
+          {/* Customer Wallet & Store Credit Button */}
+          <button
+            aria-label="View Store Credit Wallet"
+            onClick={onOpenWallet}
+            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-none border border-neutral-200 bg-neutral-50 hover:bg-gold/10 hover:border-gold text-ink transition-colors cursor-pointer"
+            title="Skylark Club Wallet & Store Credit"
+          >
+            <Wallet size={16} className="text-gold shrink-0" />
+            <div className="flex items-baseline gap-1 text-[11px] font-bold">
+              <span className="hidden xl:inline text-neutral-500 font-normal">Wallet:</span>
+              <span className="text-ink font-mono">₹{walletBalance.toFixed(0)}</span>
+            </div>
+          </button>
 
           {/* Wishlist Button */}
           <button
@@ -109,6 +125,7 @@ export default function Navbar({
             )}
           </button>
 
+          {/* Shopping Cart Button */}
           <button
             aria-label="View Shopping Cart"
             onClick={onOpenCart}
@@ -134,11 +151,37 @@ export default function Navbar({
 
       {open && (
         <nav className="lg:hidden flex flex-col gap-3 border-t bg-white px-4 py-4 text-xs font-bold">
+          {/* Mobile Wallet banner */}
+          <div 
+            onClick={() => {
+              setOpen(false);
+              if (onOpenWallet) onOpenWallet();
+            }}
+            className="flex items-center justify-between p-3 bg-neutral-900 text-white rounded-none border border-gold/40 cursor-pointer"
+          >
+            <div className="flex items-center gap-2.5">
+              <div className="h-8 w-8 bg-gold/20 text-gold grid place-items-center rounded-none">
+                <Wallet size={16} />
+              </div>
+              <div>
+                <span className="text-[10px] uppercase tracking-wider text-gold font-bold block">
+                  Club Wallet & Store Credit
+                </span>
+                <span className="text-sm font-extrabold font-mono text-white">
+                  ₹{walletBalance.toFixed(2)}
+                </span>
+              </div>
+            </div>
+            <span className="text-[10px] font-bold bg-gold text-ink px-2 py-1">
+              Top Up
+            </span>
+          </div>
+
           {navItems.map((item) => (
             <button
               key={item.label}
               onClick={() => handleNavClick(item)}
-              className="py-1 text-left hover:text-gold transition-colors text-neutral-700"
+              className="py-1 text-left hover:text-gold transition-colors text-neutral-700 cursor-pointer"
             >
               {item.label}
             </button>
@@ -160,3 +203,4 @@ export default function Navbar({
     </header>
   );
 }
+

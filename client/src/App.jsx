@@ -11,7 +11,9 @@ import ProductDetail from './components/ProductDetail.jsx';
 import Help from './components/Help.jsx';
 import CartDrawer from './components/CartDrawer.jsx';
 import WishlistDrawer from './components/WishlistDrawer.jsx';
-import { CheckCircle2, Heart } from 'lucide-react';
+import WalletModal from './components/WalletModal.jsx';
+import CheckoutModal from './components/CheckoutModal.jsx';
+import { CheckCircle2, Heart, Wallet } from 'lucide-react';
 
 export default function App() {
   const getInitialView = () => {
@@ -30,7 +32,136 @@ export default function App() {
   const [cart, setCart] = useState([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isWishlistOpen, setIsWishlistOpen] = useState(false);
+  const [isWalletOpen, setIsWalletOpen] = useState(false);
+  const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
+  const [useStoreCredit, setUseStoreCredit] = useState(true);
   const [toastMessage, setToastMessage] = useState(null);
+
+  // Persistent customer wallet & store credit
+  const defaultWallet = {
+    balance: 350.00,
+    customerName: 'Skylark Club Member',
+    membershipId: 'SKY-WL-8821',
+    transactions: [
+      { id: 'tx-1', date: '2026-10-20', description: 'Welcome Club Store Credit', type: 'credit', amount: 200.00 },
+      { id: 'tx-2', date: '2026-10-22', description: 'Return Courtesy Credit #RET-4091', type: 'credit', amount: 150.00 },
+    ],
+    redeemedCodes: ['WELCOME100'],
+  };
+
+  const [wallet, setWallet] = useState(() => {
+    try {
+      const saved = localStorage.getItem('skylark_customer_wallet');
+      return saved ? JSON.parse(saved) : defaultWallet;
+    } catch {
+      return defaultWallet;
+    }
+  });
+
+  useEffect(() => {
+    try {
+      localStorage.setItem('skylark_customer_wallet', JSON.stringify(wallet));
+    } catch {
+      // ignore localStorage quota errors
+    }
+  }, [wallet]);
+
+  // Wallet operations
+  const addWalletFunds = (amount, note = 'Store Credit Added') => {
+    const num = Number(amount);
+    if (isNaN(num) || num <= 0) return;
+    const newTx = {
+      id: 'tx-' + Date.now(),
+      date: new Date().toISOString().split('T')[0],
+      description: note,
+      type: 'credit',
+      amount: num,
+    };
+    setWallet((prev) => ({
+      ...prev,
+      balance: prev.balance + num,
+      transactions: [newTx, ...prev.transactions],
+    }));
+    setToastMessage({ text: `Added ₹${num.toFixed(2)} to your Store Credit Wallet!`, type: 'wallet' });
+    setTimeout(() => setToastMessage(null), 3000);
+  };
+
+  const redeemWalletCoupon = (rawCode) => {
+    const code = rawCode.trim().toUpperCase();
+    const redeemed = wallet?.redeemedCodes || [];
+    if (redeemed.includes(code)) {
+      return { success: false, text: 'This voucher code has already been redeemed on this account.' };
+    }
+
+    const couponMap = {
+      'SKYLARK200': 200,
+      'PETLOVE150': 150,
+      'RETURN500': 500,
+      'WELCOME100': 100,
+      'PAWCARE50': 50,
+    };
+
+    let creditValue = couponMap[code];
+    if (!creditValue) {
+      const match = code.match(/\d+$/);
+      if (match) {
+        creditValue = parseInt(match[0], 10);
+      }
+    }
+
+    if (!creditValue || creditValue <= 0) {
+      return { success: false, text: 'Invalid voucher code. Please check and try again.' };
+    }
+
+    const newTx = {
+      id: 'tx-' + Date.now(),
+      date: new Date().toISOString().split('T')[0],
+      description: `Voucher Redeemed: ${code}`,
+      type: 'credit',
+      amount: creditValue,
+    };
+
+    setWallet((prev) => ({
+      ...prev,
+      balance: prev.balance + creditValue,
+      redeemedCodes: [...(prev.redeemedCodes || []), code],
+      transactions: [newTx, ...prev.transactions],
+    }));
+
+    setToastMessage({ text: `Redeemed ${code}! ₹${creditValue} added to Store Credit.`, type: 'wallet' });
+    setTimeout(() => setToastMessage(null), 3500);
+
+    return { success: true, text: `Success! ₹${creditValue} has been added to your store credit.` };
+  };
+
+  const deductWalletFunds = (amount, note = 'Order Payment') => {
+    const num = Number(amount);
+    if (isNaN(num) || num <= 0) return;
+    const newTx = {
+      id: 'tx-' + Date.now(),
+      date: new Date().toISOString().split('T')[0],
+      description: note,
+      type: 'debit',
+      amount: num,
+    };
+    setWallet((prev) => ({
+      ...prev,
+      balance: Math.max(0, prev.balance - num),
+      transactions: [newTx, ...prev.transactions],
+    }));
+  };
+
+  const handleCompleteOrder = (orderDetails) => {
+    if (orderDetails.appliedCredit > 0) {
+      deductWalletFunds(orderDetails.appliedCredit, `Order #${orderDetails.orderId} Payment`);
+    }
+    setCart([]);
+    setToastMessage({
+      text: `Order #${orderDetails.orderId} placed successfully!`,
+      type: 'cart',
+    });
+    setTimeout(() => setToastMessage(null), 4000);
+  };
 
   // Sync URL changes with back/forward browser buttons
   useEffect(() => {
@@ -198,6 +329,8 @@ export default function App() {
     }
   };
 
+  const cartSubtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+
   return (
     <div className="flex min-h-screen flex-col bg-white text-ink font-sans w-full max-w-full overflow-x-hidden">
       {/* Toast Notification */}
@@ -205,6 +338,8 @@ export default function App() {
         <div className="fixed top-20 right-4 z-50 flex items-center gap-2 rounded-2xl bg-ink px-4 py-3 text-xs font-bold text-white shadow-xl border border-gold/30 animate-in fade-in slide-in-from-top-2">
           {toastMessage.type === 'heart' ? (
             <Heart size={16} className="text-rose-400 fill-rose-400 shrink-0" />
+          ) : toastMessage.type === 'wallet' ? (
+            <Wallet size={16} className="text-gold shrink-0" />
           ) : (
             <CheckCircle2 size={16} className="text-emerald-400 shrink-0" />
           )}
@@ -225,6 +360,14 @@ export default function App() {
               View Wishlist
             </button>
           )}
+          {toastMessage.type === 'wallet' && (
+            <button
+              onClick={() => setIsWalletOpen(true)}
+              className="ml-2 rounded-none bg-gold/20 px-2.5 py-1 text-[10px] font-bold text-gold hover:bg-gold/30 cursor-pointer"
+            >
+              View Wallet
+            </button>
+          )}
         </div>
       )}
 
@@ -232,6 +375,8 @@ export default function App() {
       <Navbar
         cartCount={cartTotalCount}
         wishlistCount={wishlist.length}
+        walletBalance={wallet.balance}
+        onOpenWallet={() => setIsWalletOpen(true)}
         onSearch={setSearchQuery}
         searchValue={searchQuery}
         onOpenCart={() => setIsCartOpen(true)}
@@ -291,7 +436,10 @@ export default function App() {
       </main>
 
       {/* Footer */}
-      <Footer onNavigate={handleNavigate} />
+      <Footer 
+        onNavigate={handleNavigate} 
+        onOpenWallet={() => setIsWalletOpen(true)}
+      />
 
       {/* Cart Drawer Slide-over */}
       <CartDrawer
@@ -301,6 +449,14 @@ export default function App() {
         onUpdateQty={updateCartQty}
         onRemoveItem={removeFromCart}
         onExploreProducts={handleViewAllProducts}
+        wallet={wallet}
+        useStoreCredit={useStoreCredit}
+        onToggleStoreCredit={setUseStoreCredit}
+        onOpenWallet={() => setIsWalletOpen(true)}
+        onCheckout={() => {
+          setIsCartOpen(false);
+          setIsCheckoutOpen(true);
+        }}
       />
 
       {/* Wishlist Drawer Slide-over */}
@@ -313,6 +469,36 @@ export default function App() {
         onSelectProduct={handleSelectProduct}
         onExploreProducts={handleViewAllProducts}
       />
+
+      {/* Customer Wallet & Store Credit Modal */}
+      <WalletModal
+        isOpen={isWalletOpen}
+        onClose={() => setIsWalletOpen(false)}
+        wallet={wallet}
+        onAddFunds={addWalletFunds}
+        onRedeemCoupon={redeemWalletCoupon}
+        onNavigateToHelp={() => {
+          setIsWalletOpen(false);
+          handleNavigate('help');
+        }}
+      />
+
+      {/* Direct Checkout Modal */}
+      <CheckoutModal
+        isOpen={isCheckoutOpen}
+        onClose={() => setIsCheckoutOpen(false)}
+        cart={cart}
+        subtotal={cartSubtotal}
+        wallet={wallet}
+        useStoreCredit={useStoreCredit}
+        onToggleStoreCredit={setUseStoreCredit}
+        onCompleteOrder={handleCompleteOrder}
+        onOpenWallet={() => {
+          setIsCheckoutOpen(false);
+          setIsWalletOpen(true);
+        }}
+      />
     </div>
   );
 }
+

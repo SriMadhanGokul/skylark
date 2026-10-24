@@ -7,6 +7,7 @@ const quick = [
   ['Shop', '#products', 'all-products'],
   ['Shop by Category', '#categories', 'categories'],
   ['Help & Returns', '/help', 'help'],
+  ['Club Wallet & Store Credit', '#wallet', 'wallet'],
   ['About Us', '#about', 'home'],
   ['Contact', '#contact', 'home'],
 ];
@@ -18,10 +19,14 @@ const cats = [
   ['Oral Sprays', '#categories'],
 ];
 
-export default function Footer({ onNavigate }) {
+export default function Footer({ onNavigate, onOpenWallet }) {
   const handleLinkClick = (e, target, view) => {
+    e.preventDefault();
+    if (view === 'wallet') {
+      if (onOpenWallet) onOpenWallet();
+      return;
+    }
     if (view && onNavigate) {
-      e.preventDefault();
       onNavigate(view, target);
     }
   };

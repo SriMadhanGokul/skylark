@@ -1,4 +1,4 @@
-import { X, Trash2, Plus, Minus, ShoppingBag, ArrowRight, ShieldCheck } from 'lucide-react';
+import { X, Trash2, Plus, Minus, ShoppingBag, ArrowRight, ShieldCheck, Wallet, Sparkles } from 'lucide-react';
 import Img from './Img.jsx';
 
 export default function CartDrawer({
@@ -9,18 +9,34 @@ export default function CartDrawer({
   onRemoveItem,
   onCheckout,
   onExploreProducts,
+  wallet,
+  useStoreCredit = false,
+  onToggleStoreCredit,
+  onOpenWallet,
 }) {
   if (!isOpen) return null;
 
   const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
   const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
 
+  const availableCredit = wallet?.balance || 0;
+  const appliedCredit = (useStoreCredit && availableCredit > 0) 
+    ? Math.min(availableCredit, subtotal) 
+    : 0;
+  const finalPayable = Math.max(0, subtotal - appliedCredit);
+
   const handleWhatsAppOrder = () => {
     if (cart.length === 0) return;
     const itemList = cart
       .map((item, i) => `${i + 1}. ${item.name} (${item.size}) x${item.quantity} = ₹${(item.price * item.quantity).toFixed(2)}`)
       .join('%0A');
-    const msg = `Hello Skylark Lifecare and Sciences,%0A%0AI would like to place an order:%0A${itemList}%0A%0ATotal Amount: ₹${subtotal.toFixed(2)}%0A%0APlease confirm availability and shipping details.`;
+    
+    let creditNote = '';
+    if (appliedCredit > 0) {
+      creditNote = `%0A%0A⭐ *Store Credit Applied:* -₹${appliedCredit.toFixed(2)}%0A*Final Payable Amount:* ₹${finalPayable.toFixed(2)}`;
+    }
+
+    const msg = `Hello Skylark Lifecare and Sciences,%0A%0AI would like to place an order:%0A${itemList}%0A%0ASubtotal: ₹${subtotal.toFixed(2)}${creditNote}%0A%0APlease confirm availability and shipping details.`;
     window.open(`https://wa.me/918059053151?text=${msg}`, '_blank');
   };
 
@@ -94,7 +110,7 @@ export default function CartDrawer({
                         </div>
                         <button
                           onClick={() => onRemoveItem(item.id)}
-                          className="text-neutral-400 hover:text-rose-500 transition-colors p-1"
+                          className="text-neutral-400 hover:text-rose-500 transition-colors p-1 cursor-pointer"
                           aria-label="Remove item"
                         >
                           <Trash2 size={14} />
@@ -106,7 +122,7 @@ export default function CartDrawer({
                         <div className="flex items-center rounded-none border border-neutral-200 bg-neutral-50">
                           <button
                             onClick={() => onUpdateQty(item.id, Math.max(1, item.quantity - 1))}
-                            className="h-7 w-7 text-neutral-600 hover:bg-neutral-200 rounded-none grid place-items-center"
+                            className="h-7 w-7 text-neutral-600 hover:bg-neutral-200 rounded-none grid place-items-center cursor-pointer"
                           >
                             <Minus size={11} />
                           </button>
@@ -115,7 +131,7 @@ export default function CartDrawer({
                           </span>
                           <button
                             onClick={() => onUpdateQty(item.id, item.quantity + 1)}
-                            className="h-7 w-7 text-neutral-600 hover:bg-neutral-200 rounded-none grid place-items-center"
+                            className="h-7 w-7 text-neutral-600 hover:bg-neutral-200 rounded-none grid place-items-center cursor-pointer"
                           >
                             <Plus size={11} />
                           </button>
@@ -132,10 +148,53 @@ export default function CartDrawer({
             )}
           </div>
 
-          {/* Footer with Subtotal & Checkout */}
+          {/* Footer with Subtotal, Store Credit, & Checkout */}
           {cart.length > 0 && (
-            <div className="border-t border-neutral-200 bg-neutral-50 p-6">
-              <div className="space-y-2 text-xs">
+            <div className="border-t border-neutral-200 bg-neutral-50 p-6 space-y-4">
+              {/* Store Credit Banner & Toggle */}
+              <div className="border border-neutral-200 bg-white p-3 space-y-2">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <Wallet size={15} className="text-gold" />
+                    <div>
+                      <span className="text-xs font-bold text-ink block">Skylark Store Credit</span>
+                      <span className="text-[10px] text-neutral-500">
+                        Balance: <strong className="text-ink font-mono">₹{(wallet?.balance || 0).toFixed(2)}</strong>
+                      </span>
+                    </div>
+                  </div>
+                  {availableCredit > 0 ? (
+                    <label className="flex items-center gap-1.5 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={useStoreCredit}
+                        onChange={(e) => onToggleStoreCredit && onToggleStoreCredit(e.target.checked)}
+                        className="h-4 w-4 accent-[#e8a020] cursor-pointer"
+                      />
+                      <span className="text-[11px] font-bold text-ink">
+                        {useStoreCredit ? 'Applied' : 'Apply'}
+                      </span>
+                    </label>
+                  ) : (
+                    <button
+                      onClick={onOpenWallet}
+                      className="text-[10px] font-bold text-gold hover:underline cursor-pointer"
+                    >
+                      Top-up / Redeem
+                    </button>
+                  )}
+                </div>
+
+                {useStoreCredit && appliedCredit > 0 && (
+                  <div className="flex items-center gap-1.5 text-[10px] text-emerald-700 bg-emerald-50 px-2 py-1 font-semibold border border-emerald-200">
+                    <Sparkles size={11} className="text-emerald-600 shrink-0" />
+                    <span>₹{appliedCredit.toFixed(2)} store credit deducted from total</span>
+                  </div>
+                )}
+              </div>
+
+              {/* Price Breakdown */}
+              <div className="space-y-1.5 text-xs">
                 <div className="flex justify-between text-neutral-600">
                   <span>Subtotal</span>
                   <span className="font-semibold text-ink">₹ {subtotal.toFixed(2)}</span>
@@ -144,25 +203,27 @@ export default function CartDrawer({
                   <span>Shipping</span>
                   <span className="font-semibold text-emerald-600">FREE</span>
                 </div>
-                <div className="flex justify-between text-xs text-neutral-500">
-                  <span>Taxes</span>
-                  <span>Included</span>
-                </div>
+                {appliedCredit > 0 && (
+                  <div className="flex justify-between text-emerald-700 font-bold">
+                    <span>Store Credit</span>
+                    <span>- ₹ {appliedCredit.toFixed(2)}</span>
+                  </div>
+                )}
                 <div className="border-t border-neutral-200 pt-2 flex justify-between text-sm font-bold text-ink">
-                  <span>Total Amount</span>
-                  <span className="text-base text-gold">₹ {subtotal.toFixed(2)}</span>
+                  <span>Total Payable</span>
+                  <span className="text-base text-gold">₹ {finalPayable.toFixed(2)}</span>
                 </div>
               </div>
 
-              <div className="mt-4 flex items-center gap-1.5 text-[10px] text-neutral-500 justify-center">
+              <div className="flex items-center gap-1.5 text-[10px] text-neutral-500 justify-center">
                 <ShieldCheck size={13} className="text-emerald-600" />
                 <span>100% Secure Checkout & Guaranteed Pet-Safe Products</span>
               </div>
 
-              <div className="mt-4 flex flex-col gap-2">
+              <div className="flex flex-col gap-2">
                 <button
                   onClick={handleWhatsAppOrder}
-                  className="flex h-11 w-full items-center justify-center gap-2 rounded-none bg-emerald-600 text-xs font-bold text-white shadow-md hover:bg-emerald-700 active:scale-95 transition-all"
+                  className="flex h-11 w-full items-center justify-center gap-2 rounded-none bg-emerald-600 text-xs font-bold text-white shadow-md hover:bg-emerald-700 active:scale-95 transition-all cursor-pointer"
                 >
                   Order via WhatsApp Instant <ArrowRight size={14} />
                 </button>
@@ -171,7 +232,7 @@ export default function CartDrawer({
                     onClose();
                     if (onCheckout) onCheckout();
                   }}
-                  className="flex h-10 w-full items-center justify-center gap-2 rounded-none bg-ink text-xs font-bold text-white hover:bg-neutral-800 transition-colors"
+                  className="flex h-10 w-full items-center justify-center gap-2 rounded-none bg-ink text-xs font-bold text-white hover:bg-neutral-800 transition-colors cursor-pointer"
                 >
                   Proceed to Direct Checkout
                 </button>
@@ -183,3 +244,4 @@ export default function CartDrawer({
     </div>
   );
 }
+
